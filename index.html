@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="km">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>កម្ពុជា ប៉ុស្តិ៍ - ប្រព័ន្ធវត្តមាន</title>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+  <style>
+    :root{--bg:#f4f5f7;--card:#ffffff;--primary:#1b4dff;--primary-light:#e8eeff;--primary-dark:#0f2e9e;--success:#0d9f5f;--success-light:#e7f8f0;--success-dark:#087a49;--warning:#d97706;--warning-light:#fef3e0;--warning-dark:#b45309;--danger:#dc2626;--danger-light:#fef2f2;--danger-dark:#991b1b;--text:#111827;--text-secondary:#6b7280;--text-muted:#9ca3af;--border:#e5e7eb;--border-light:#f3f4f6;--shadow-sm:0 1px 2px rgba(0,0,0,0.05);--shadow-lg:0 12px 40px rgba(0,0,0,0.12);--radius:12px;--radius-lg:20px;--radius-full:9999px;--font:'DM Sans',sans-serif;--mono:'JetBrains Mono',monospace}
+    *{box-sizing:border-box;margin:0;padding:0}body{font-family:var(--font);background:var(--bg);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:16px;color:var(--text);-webkit-font-smoothing:antialiased}.container{background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);width:100%;max-width:480px;padding:36px 28px;position:relative;overflow:hidden;animation:slideUp .5s ease}.container::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--primary),#6366f1,var(--primary))}@keyframes slideUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}.brand{display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:8px}.brand-logo{width:44px;height:44px;background:var(--primary);border-radius:var(--radius);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:18px}.brand-text{font-size:15px;font-weight:600;color:var(--text-secondary);letter-spacing:.5px;text-transform:uppercase}.header{text-align:center;margin-bottom:28px}.header h1{font-size:26px;font-weight:700;color:var(--text);margin-bottom:4px;letter-spacing:-.5px}.header p{font-size:14px;color:var(--text-muted);font-weight:500}.form-group{margin-bottom:20px}.form-label{display:block;font-size:13px;font-weight:600;color:var(--text-secondary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.5px}select{width:100%;padding:14px 16px;font-size:16px;font-family:var(--font);font-weight:500;border:2px solid var(--border);border-radius:var(--radius);background:var(--card);color:var(--text);transition:all .2s;-webkit-appearance:none;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer}select:focus{outline:none;border-color:var(--primary);box-shadow:0 0 0 3px rgba(27,77,255,.12)}.geo-badge{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px 16px;border-radius:var(--radius-full);font-size:14px;font-weight:600;margin-bottom:20px;transition:all .3s}.geo-badge.loading{background:var(--primary-light);color:var(--primary)}.geo-badge.ok{background:var(--success-light);color:var(--success)}.geo-badge.fail{background:var(--danger-light);color:var(--danger)}.geo-badge.denied{background:var(--warning-light);color:var(--warning)}.geo-badge::before{content:'';width:8px;height:8px;border-radius:50%;background:currentColor;animation:blink 1.5s ease infinite}.geo-badge.ok::before{animation:none}@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}.method-toggle{display:flex;background:var(--border-light);border-radius:var(--radius);padding:4px;gap:4px;margin-bottom:20px}.method-btn{flex:1;padding:12px;font-size:15px;font-family:var(--font);font-weight:600;border:none;border-radius:10px;cursor:pointer;transition:all .25s;background:transparent;color:var(--text-secondary)}.method-btn.active{background:var(--card);color:var(--primary);box-shadow:var(--shadow-sm)}.method-btn:hover:not(.active){color:var(--text)}.pin-section{display:none}.pin-section.visible{display:block;animation:fadeIn .3s ease}.face-section{display:none;text-align:center;padding:16px 0}.face-section.visible{display:block;animation:fadeIn .3s ease}.face-section p{font-size:14px;color:var(--text-muted);margin-bottom:16px}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.pin-row{display:flex;gap:8px;justify-content:center;margin:20px 0}.pin-box{width:48px;height:58px;text-align:center;font-size:24px;font-family:var(--mono);font-weight:500;border:2px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);transition:all .2s;-webkit-appearance:none;appearance:none}.pin-box:focus{outline:none;border-color:var(--primary);background:var(--card);box-shadow:0 0 0 3px rgba(27,77,255,.12)}.btn{width:100%;padding:16px;font-size:16px;font-family:var(--font);font-weight:700;border:none;border-radius:var(--radius);cursor:pointer;transition:all .2s}.btn-primary{background:var(--primary);color:#fff}.btn-primary:hover{background:var(--primary-dark);transform:translateY(-1px);box-shadow:0 4px 12px rgba(27,77,255,.3)}.btn-primary:disabled{background:var(--border);color:var(--text-muted);cursor:not-allowed;transform:none;box-shadow:none}.btn-face{background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff}.btn-face:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(99,102,241,.3)}.btn-face:disabled{background:var(--border);color:var(--text-muted);cursor:not-allowed;transform:none;box-shadow:none}.error-msg{color:var(--danger);font-size:14px;font-weight:500;text-align:center;margin-top:12px;min-height:20px}.device-banner{background:var(--warning-light);border:1px solid #fde68a;border-radius:var(--radius);padding:12px 16px;margin-bottom:16px;text-align:center;font-size:13px;color:var(--warning-dark);font-weight:600}.no-emp-msg{background:var(--warning-light);border:1px solid #fde68a;border-radius:var(--radius);padding:14px;text-align:center;font-size:14px;color:var(--warning-dark);font-weight:600;margin-bottom:16px}.info-card{background:var(--bg);border-radius:var(--radius);padding:16px;margin-bottom:20px}.info-card.visible{display:block}.info-line{display:flex;justify-content:space-between;align-items:center;padding:8px 0;font-size:14px}.info-line+.info-line{border-top:1px solid var(--border-light)}.info-key{color:var(--text-muted);font-weight:500}.info-val{color:var(--text);font-weight:600;text-align:right;max-width:55%}.badge{display:inline-block;padding:4px 12px;border-radius:var(--radius-full);font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:.5px}.badge-in{background:var(--success-light);color:var(--success)}.badge-out{background:var(--warning-light);color:var(--warning)}.badge-none{background:var(--border-light);color:var(--text-muted)}.action-row{display:flex;gap:12px;margin-bottom:20px}.action-card{flex:1;padding:20px 16px;border:2px solid var(--border);border-radius:var(--radius);cursor:pointer;transition:all .2s;text-align:center;background:var(--card)}.action-card:hover:not(.disabled){border-color:var(--text-muted);transform:translateY(-2px)}.action-card.disabled{opacity:.35;cursor:not-allowed}.action-card .action-icon{font-size:28px;margin-bottom:6px}.action-card .action-text{font-size:15px;font-weight:700;color:var(--text)}.action-card.sel-in{border-color:var(--success);background:var(--success-light)}.action-card.sel-in .action-text{color:var(--success)}.action-card.sel-out{border-color:var(--warning);background:var(--warning-light)}.action-card.sel-out .action-text{color:var(--warning)}.done-banner{background:linear-gradient(135deg,var(--success-light),#d1fae5);border:2px solid #a7f3d0;border-radius:var(--radius);padding:24px;text-align:center;margin-bottom:20px}.done-banner .done-icon{font-size:40px;margin-bottom:8px}.done-banner .done-text{font-size:16px;font-weight:700;color:var(--success-dark)}.success-header{text-align:center;margin-bottom:24px}.success-check{width:64px;height:64px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;animation:popIn .4s ease}.success-check svg{width:32px;height:32px;color:#fff}@keyframes popIn{from{transform:scale(0)}60%{transform:scale(1.2)}to{transform:scale(1)}}.success-badge{display:inline-block;padding:6px 20px;border-radius:var(--radius-full);font-size:14px;font-weight:700;margin:16px 0}.success-badge.ci{background:var(--success-light);color:var(--success)}.success-badge.co{background:var(--warning-light);color:var(--warning)}.success-time{text-align:center;font-size:13px;color:var(--text-muted);margin-top:20px;font-family:var(--mono)}.closed-clock{font-size:48px;font-family:var(--mono);font-weight:500;color:var(--danger);text-align:center;margin:20px 0;letter-spacing:2px}.closed-info{background:var(--bg);border-radius:var(--radius);padding:20px;text-align:center;font-size:15px;color:var(--text-secondary);line-height:1.8;margin-top:24px}.face-modal{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:none;justify-content:center;align-items:center;z-index:1001;padding:20px}.face-modal.visible{display:flex}.face-box{background:var(--card);border-radius:var(--radius-lg);padding:28px;max-width:440px;width:100%;text-align:center;animation:slideUp .3s ease}.face-box h3{font-size:20px;font-weight:700;margin-bottom:4px}.face-box .face-sub{font-size:14px;color:var(--text-muted);margin-bottom:16px}.steps-row{display:flex;justify-content:center;gap:8px;margin-bottom:16px}.step-pip{width:10px;height:10px;border-radius:50%;background:var(--border);transition:all .3s}.step-pip.active{background:var(--primary);transform:scale(1.3)}.step-pip.done{background:var(--success)}.cam-frame{position:relative;width:100%;max-width:300px;height:300px;margin:0 auto 16px;border-radius:var(--radius-lg);overflow:hidden;background:#111;border:3px solid var(--border)}.cam-frame video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}.dir-overlay{position:absolute;top:0;left:0;width:100%;height:100%;display:none;align-items:center;justify-content:center;pointer-events:none;z-index:5}.dir-overlay.visible{display:flex}.dir-arrow{font-size:100px;color:rgba(255,255,255,.9);text-shadow:0 0 40px rgba(0,0,0,.6);animation:pulse 1s ease-in-out infinite}.dir-text{position:absolute;bottom:16px;left:16px;right:16px;text-align:center;font-size:18px;font-weight:700;color:#fff;background:rgba(0,0,0,.6);padding:8px;border-radius:8px}@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.08)}}.face-status{font-size:15px;font-weight:600;padding:10px 16px;border-radius:var(--radius);margin-bottom:16px}.face-status.scanning{background:var(--primary-light);color:var(--primary)}.face-status.success{background:var(--success-light);color:var(--success)}.face-status.fail{background:var(--danger-light);color:var(--danger)}.face-status.loading{background:var(--border-light);color:var(--text-muted)}.face-status.turn{background:var(--warning-light);color:var(--warning)}.face-btns{display:flex;justify-content:center;gap:10px}.face-btns button{padding:12px 24px;font-size:15px;font-family:var(--font);font-weight:600;border:none;border-radius:var(--radius);cursor:pointer}.btn-retry{background:var(--primary);color:#fff}.btn-cancel{background:var(--border-light);color:var(--text-secondary)}.dev-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);display:none;justify-content:center;align-items:center;z-index:2000;padding:20px}.dev-overlay.visible{display:flex}.dev-box{background:var(--card);border-radius:var(--radius-lg);padding:28px;max-width:380px;width:100%}.dev-box h3{text-align:center;font-size:18px;margin-bottom:20px}.dev-action{width:100%;padding:12px;font-size:14px;font-family:var(--font);font-weight:600;border:none;border-radius:var(--radius);cursor:pointer;margin-bottom:8px}.dev-action.red{background:var(--danger-light);color:var(--danger)}.dev-action.blue{background:var(--primary-light);color:var(--primary)}.dev-action.orange{background:var(--warning-light);color:var(--warning)}.dev-action.gray{background:var(--border-light);color:var(--text-secondary)}#devInfo{display:none;margin-top:12px;padding:12px;background:var(--bg);border-radius:8px;font-size:12px;font-family:var(--mono);color:var(--text-secondary);white-space:pre-wrap;word-break:break-all}.dev-input-row{display:flex;gap:8px;margin-bottom:12px}.dev-input-row select{flex:1;padding:10px;font-size:14px;border-radius:8px}.loader{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(255,255,255,.6);backdrop-filter:blur(4px);display:none;justify-content:center;align-items:center;z-index:999}.loader.visible{display:flex}.loader-ring{width:48px;height:48px;border:4px solid var(--border);border-top:4px solid var(--primary);border-radius:50%;animation:spin .7s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}.toast{position:fixed;top:20px;left:50%;transform:translateX(-50%) translateY(-100px);padding:14px 24px;border-radius:var(--radius);font-size:14px;font-weight:600;color:#fff;z-index:3000;transition:transform .4s ease;max-width:90%;text-align:center}.toast.show{transform:translateX(-50%) translateY(0)}.toast.success{background:rgba(13,159,95,.95)}.toast.error{background:rgba(220,38,38,.95)}.panel{display:none}.panel.active{display:block}.lock-icon{cursor:default;-webkit-user-select:none;user-select:none}@media(max-width:480px){.container{padding:28px 20px}.header h1{font-size:22px}.pin-box{width:44px;height:54px;font-size:22px}.cam-frame{max-width:260px;height:260px}.dir-arrow{font-size:80px}}
+
+    body{padding:32px}
+    .container{max-width:760px;padding:64px 56px}
+    .brand{gap:18px;margin-bottom:14px}
+    .brand-logo{width:88px;height:88px;font-size:34px;border-radius:22px}
+    .brand-text{font-size:18px;letter-spacing:.8px}
+    .header{margin-bottom:40px}
+    .header h1{font-size:40px}
+    .header p{font-size:18px}
+    .form-label{font-size:14px}
+    select{padding:18px 18px;font-size:18px;background-position:right 14px center}
+    .method-btn{padding:14px;font-size:17px}
+    .geo-badge{font-size:18px;padding:14px 20px}
+    .btn{padding:22px;font-size:20px}
+    .pin-box{width:64px;height:78px;font-size:30px}
+
+    .dev-box{max-width:560px;padding:36px}
+    .dev-box h3{font-size:22px;margin-bottom:22px}
+    .dev-action{padding:16px;font-size:16px}
+    .dev-input-row select{padding:14px;font-size:16px;border-radius:10px}
+    #devInfo{font-size:13px}
+
+    @media(max-width:480px){
+      body{padding:18px}
+      .container{max-width:560px;padding:42px 24px}
+      .brand-logo{width:72px;height:72px;font-size:28px}
+      .header h1{font-size:30px}
+      .header p{font-size:16px}
+      .btn{padding:18px;font-size:18px}
+      .pin-box{width:54px;height:66px;font-size:26px}
+
+      .dev-box{max-width:420px;padding:26px}
+      .dev-box h3{font-size:20px}
+      .dev-action{padding:14px;font-size:15px}
+    }
+
+    .loc-modal{position:fixed;inset:0;background:rgba(17,24,39,.6);display:none;align-items:center;justify-content:center;z-index:2500;padding:18px}
+    .loc-modal.visible{display:flex}
+    .loc-box{width:100%;max-width:520px;background:var(--card);border-radius:var(--radius-lg);box-shadow:var(--shadow-lg);padding:22px 20px}
+    .loc-box h3{font-size:18px;font-weight:700;margin-bottom:8px}
+    .loc-sub{font-size:14px;color:var(--text-secondary);margin-bottom:12px;line-height:1.35}
+    .loc-steps{background:var(--border-light);border:1px solid var(--border);border-radius:14px;padding:12px 12px;margin-bottom:14px;font-size:13px;color:var(--text-secondary);line-height:1.4;white-space:pre-line}
+    .loc-actions{display:flex;gap:10px;justify-content:flex-end;flex-wrap:wrap}
+    .btn-secondary{background:var(--border-light);border:2px solid var(--border);color:var(--text-secondary)}
+
+    .browser-modal{position:fixed;inset:0;background:rgba(17,24,39,.6);display:none;align-items:center;justify-content:center;z-index:2400;padding:18px}
+    .browser-modal.visible{display:flex}
+  </style>
+</head>
+<body>
+  <div id="loadingOverlay" class="loader"><div class="loader-ring"></div></div>
+  <div id="toast" class="toast"></div>
+  <div id="browserModal" class="browser-modal"><div class="loc-box"><h3>Open in Browser</h3><div class="loc-sub" id="browserModalMsg">For best GPS and permissions, open this portal in Chrome (Android) or Safari (iPhone).</div><div class="loc-steps" id="browserModalSteps"></div><div class="loc-actions"><button class="btn btn-secondary" onclick="closeBrowserModal()">Close</button><button class="btn btn-primary" id="openInBrowserBtn" onclick="openInBrowser()">Open in Browser</button></div></div></div>
+  <div id="locationModal" class="loc-modal"><div class="loc-box"><h3>Location Required</h3><div class="loc-sub" id="locationModalMsg">Turn on Location and allow permission to use Attendance.</div><div class="loc-steps" id="locationModalSteps"></div><div class="loc-actions"><button class="btn btn-secondary" onclick="closeLocationModal()">Close</button><button class="btn btn-primary" onclick="retryLocation()">I turned it on</button></div></div></div>
+  <div id="faceScanModal" class="face-modal"><div class="face-box"><h3>Face Verification</h3><div class="face-sub" id="faceScanName">Verifying identity...</div><div class="steps-row"><div class="step-pip" id="step1"></div><div class="step-pip" id="step2"></div><div class="step-pip" id="step3"></div><div class="step-pip" id="step4"></div></div><div class="cam-frame"><video id="faceVideo" autoplay muted playsinline webkit-playsinline></video><div class="dir-overlay" id="directionOverlay"><div id="directionArrow" class="dir-arrow"></div><div id="directionLabel" class="dir-text"></div></div></div><div class="face-status loading" id="faceScanStatus">Loading...</div><div id="modelsLoading" style="display:none;font-size:13px;color:var(--text-muted);margin-bottom:12px;"></div><div class="face-btns"><button class="btn-retry" id="faceRetryBtn" onclick="retryFaceScan()" style="display:none;">Retry</button><button class="btn-cancel" onclick="cancelFaceScan()">Cancel</button></div></div></div>
+  <div id="devPanel" class="dev-overlay"><div class="dev-box"><h3>Developer Tools</h3><button class="dev-action red" onclick="devClearDeviceLock()">Clear Device Lock</button><button class="dev-action blue" onclick="devClearAllStorage()">Clear All Storage</button><div class="form-label" style="margin-top:12px;">Clear Login Session</div><div class="dev-input-row"><select id="devEmpSelect"><option value="">Select ID...</option></select><button class="dev-action orange" style="width:auto;margin:0;padding:10px 16px;" onclick="devClearLoginSession()">Clear</button></div><div class="form-label" style="margin-top:12px;">Admin Force Unlock</div><div class="dev-input-row"><select id="devEmpSelectUnlock"><option value="">Select ID...</option></select><button class="dev-action red" style="width:auto;margin:0;padding:10px 16px;" onclick="devAdminForceUnlock()">Force Unlock</button></div><button class="dev-action gray" onclick="devShowInfo()">Debug Info</button><div id="devInfo"></div><button class="dev-action gray" onclick="closeDevPanel()" style="margin-top:8px;">Close</button></div></div>
+  <div class="container panel" id="panelClosed"><div class="brand"><div class="brand-logo lock-icon">CP</div><div class="brand-text">Cambodia Post</div></div><div class="header"><h1>Portal Closed</h1><p id="closedDate"></p></div><div class="closed-clock" id="closedCurrentTime"></div><div class="closed-info">Operating hours<br><strong>7:00 AM - 10:00 PM</strong><br><strong>Monday - Saturday</strong></div></div>
+  <div class="container panel active" id="panelLogin"><div class="brand"><div class="brand-logo lock-icon">CP</div><div class="brand-text">Cambodia Post</div></div><div class="header"><h1>Employee Login</h1><p id="loginDate"></p></div><div id="geoStatus" class="geo-badge loading">Detecting location...</div><div class="device-banner" id="deviceLockBanner" style="display:none;"></div><div id="noEmployeesMsg" class="no-emp-msg" style="display:none;"></div><div id="loginFormSection" style="display:none;"><div class="form-group"><div class="form-label">Employee ID</div><select id="loginEmployeeSelect"><option value="">Select employee...</option></select></div><div class="form-label">Login Method</div><div class="method-toggle"><button class="method-btn active" id="btnMethodPin" onclick="selectLoginMethod('pin')">PIN Code</button><button class="method-btn" id="btnMethodFace" onclick="selectLoginMethod('face')">Face ID</button></div><div class="pin-section visible" id="pinSection"><div class="form-label">6-Digit PIN</div><div class="pin-row"><input type="password" inputmode="numeric" class="pin-box" maxlength="1" id="pin1" oninput="pinNext(1)" onkeydown="pinBack(event,1)"><input type="password" inputmode="numeric" class="pin-box" maxlength="1" id="pin2" oninput="pinNext(2)" onkeydown="pinBack(event,2)"><input type="password" inputmode="numeric" class="pin-box" maxlength="1" id="pin3" oninput="pinNext(3)" onkeydown="pinBack(event,3)"><input type="password" inputmode="numeric" class="pin-box" maxlength="1" id="pin4" oninput="pinNext(4)" onkeydown="pinBack(event,4)"><input type="password" inputmode="numeric" class="pin-box" maxlength="1" id="pin5" oninput="pinNext(5)" onkeydown="pinBack(event,5)"><input type="password" inputmode="numeric" class="pin-box" maxlength="1" id="pin6" oninput="pinNext(6)" onkeydown="pinBack(event,6)"></div><button class="btn btn-primary" id="loginBtnPin" onclick="handlePinLogin()" disabled>Sign In</button></div><div class="face-section" id="faceSection"><p>Select your ID above, then verify with your face.</p><button class="btn btn-face" id="loginBtnFace" onclick="handleFaceLogin()" disabled>Verify Face</button></div><div class="error-msg" id="loginError"></div></div></div>
+  <div class="container panel" id="panelAttendance"><div class="brand"><div class="brand-logo">CP</div><div class="brand-text">Cambodia Post</div></div><div class="header"><h1>Attendance</h1><p id="attendanceDate"></p></div><div id="geoStatusAttendance" class="geo-badge ok" style="display:none;"></div><div id="infoCard" class="info-card visible"><div class="info-line"><span class="info-key">Name</span><span class="info-val" id="infoName">-</span></div><div class="info-line"><span class="info-key">ID</span><span class="info-val" id="infoId">-</span></div><div class="info-line"><span class="info-key">Branch</span><span class="info-val" id="infoMainBranch">-</span></div><div class="info-line"><span class="info-key">Province</span><span class="info-val" id="infoProvince">-</span></div><div class="info-line"><span class="info-key">District</span><span class="info-val" id="infoDistrict">-</span></div><div class="info-line"><span class="info-key">Status</span><span class="info-val" id="infoStatus"><span class="badge badge-none">No Record</span></span></div></div><div id="completedBanner" class="done-banner" style="display:none;"><div class="done-icon">&#x2705;</div><div class="done-text">Attendance complete for today</div></div><div id="actionSection"><div class="action-row"><div class="action-card" id="btnCheckIn" onclick="selectAction('Check In')"><div class="action-icon">&#x2714;&#xFE0F;</div><div class="action-text">Check In</div></div><div class="action-card" id="btnCheckOut" onclick="selectAction('Check Out')"><div class="action-icon">&#x1F6AA;</div><div class="action-text">Check Out</div></div></div><button class="btn btn-primary" id="submitBtn" onclick="submitAttendance()" disabled>Submit</button></div></div>
+  <div class="container panel" id="panelSuccess"><div class="success-header"><div class="success-check"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></div><h1 id="successTitle" style="font-size:24px;font-weight:700;">Check In Successful</h1><p style="font-size:14px;color:var(--text-muted)">Attendance recorded</p></div><div style="text-align:center;font-size:13px;color:var(--text-muted);margin-bottom:8px" id="successDate"></div><div style="text-align:center"><span class="success-badge" id="successActionBadge">Check In</span></div><div class="info-card" style="display:block;margin-top:20px"><div class="info-line"><span class="info-key">Name</span><span class="info-val" id="successName">-</span></div><div class="info-line"><span class="info-key">ID</span><span class="info-val" id="successId">-</span></div><div class="info-line"><span class="info-key">Branch</span><span class="info-val" id="successBranch">-</span></div><div class="info-line"><span class="info-key">Province</span><span class="info-val" id="successProvince">-</span></div><div class="info-line"><span class="info-key">District</span><span class="info-val" id="successDistrict">-</span></div></div><div class="success-time" id="successTimestamp"></div></div>
+  <script>
+    var API_URL='https://script.google.com/macros/s/AKfycby7ipA2KGn3FFJzsxksh0RxS9QuuOd1LEGe1Az7EVbivqjtvvajejr6N8dQC1-6q4WgFg/exec';
+    var FACE_MODELS_URL='https://cdn.jsdelivr.net/npm/@vladmandic/face-api@1.7.12/model/';
+    var FACE_PHOTOS_PATH='./faces/';
+    var FACE_MATCH_THRESHOLD=0.45;
+    var HEAD_TURN_THRESHOLD=15;
+    var OPEN_HOUR=7,CLOSE_HOUR=22,BLOCKED_DAYS=[0];
+    var HOLIDAYS=['2026-01-01','2026-01-07','2026-03-08','2026-04-14','2026-04-15','2026-04-16','2026-05-01','2026-05-14','2026-05-15','2026-05-16','2026-06-18','2026-09-24','2026-10-15','2026-10-29','2026-11-09','2026-11-18','2026-11-19','2026-11-20'];
+
+    var SESSION_TOKEN_KEY='attendanceSessionToken';
+    var DEVICE_ID_KEY='attendanceDeviceId';
+    var sessionToken=null;
+    var deviceId=null;
+
+    var ALLOWED_LOCATIONS=[];
+    ALLOWED_LOCATIONS[0]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តស្វាយរៀង',lat:11.081259,lng:105.804595,radius:220};
+    ALLOWED_LOCATIONS[1]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាបាវិត',lat:11.070936,lng:106.158401,radius:220};
+    ALLOWED_LOCATIONS[2]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តបាត់ដំបង',lat:12.540283,lng:103.920233,radius:220};
+    ALLOWED_LOCATIONS[3]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តបាត់ដំបង (រតនមណ្ឌល)',lat:12.891107,lng:102.972024,radius:220};
+    ALLOWED_LOCATIONS[4]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តបាត់ដំបង (មោងឬស្សី)',lat:12.777698,lng:103.446368,radius:220};
+    ALLOWED_LOCATIONS[5]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តបាត់ដំបង (ថ្មគោល)',lat:13.265172,lng:103.088469,radius:220};
+    ALLOWED_LOCATIONS[6]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តឧត្តរមានជ័យ',lat:14.191351,lng:103.509739,radius:220};
+    ALLOWED_LOCATIONS[7]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តត្បូងឃ្មុំ',lat:11.906147,lng:105.659165,radius:220};
+    ALLOWED_LOCATIONS[8]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកំពត',lat:10.605981,lng:104.180114,radius:220};
+    ALLOWED_LOCATIONS[9]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តព្រៃវែង',lat:11.483295,lng:105.323962,radius:220};
+    ALLOWED_LOCATIONS[10]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាអ្នកលឿង(ពាមរក៍)',lat:11.260288,lng:105.293605,radius:220};
+    ALLOWED_LOCATIONS[11]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តបន្ទាយមានជ័យ',lat:13.586475,lng:102.974029,radius:220};
+    ALLOWED_LOCATIONS[12]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តបន្ទាយមានជ័យ (ព្រះនេត្រព្រះ)',lat:13.623754,lng:103.180275,radius:220};
+    ALLOWED_LOCATIONS[13]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តប៉ោយប៉ែត',lat:13.643441,lng:102.576778,radius:220};
+    ALLOWED_LOCATIONS[14]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តស្ទឹងត្រែង',lat:13.526472,lng:105.969804,radius:220};
+    ALLOWED_LOCATIONS[15]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តក្រចេះ',lat:12.481659,lng:106.018668,radius:220};
+    ALLOWED_LOCATIONS[16]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកោះកុង',lat:11.616013,lng:102.983317,radius:220};
+    ALLOWED_LOCATIONS[17]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាតាកែវ',lat:10.990662,lng:104.78278,radius:220};
+    ALLOWED_LOCATIONS[18]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តអង្គតាសោម',lat:11.012446,lng:104.672659,radius:220};
+    ALLOWED_LOCATIONS[19]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកណ្ដាល (ស្រុកកោះធំ)',lat:11.126922,lng:105.057988,radius:220};
+    ALLOWED_LOCATIONS[20]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកណ្ដាល (ស្រុកព្រែកអំបិល) បិតហើយ',lat:11.245284,lng:105.02511,radius:220};
+    ALLOWED_LOCATIONS[21]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកំពង់ឆ្នាំង (កំពង់ត្រឡាច)',lat:11.939902,lng:104.714693,radius:220};
+    ALLOWED_LOCATIONS[22]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តគំពង់ឆ្នាំង (ទឹកផុស)',lat:12.047343,lng:104.521924,radius:220};
+    ALLOWED_LOCATIONS[23]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាសៀមរាប(ជីក្រែង)',lat:13.124312,lng:104.341217,radius:220};
+    ALLOWED_LOCATIONS[24]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាសៀមរាប(ពួក)',lat:13.440985,lng:103.728708,radius:220};
+    ALLOWED_LOCATIONS[25]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាសៀមរាប(ក្រឡាញ់)',lat:13.586014,lng:103.420971,radius:220};
+    ALLOWED_LOCATIONS[26]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាកំពង់ចាម',lat:20.659324,lng:-11.406255,radius:220};
+    ALLOWED_LOCATIONS[27]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាកំពង់ចាម(ជើងព្រៃ)',lat:12.055296,lng:105.066999,radius:220};
+    ALLOWED_LOCATIONS[28]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាប៉ៃលិន',lat:12.855491,lng:102.611491,radius:220};
+    ALLOWED_LOCATIONS[29]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាពោធិ៍សាត់',lat:12.540418,lng:103.9203,radius:220};
+
+    // Optional strict zone boxes by location index.
+    // If a zone exists for a location, check-in is allowed only inside that zone.
+    // Supported formats:
+    // - Polygon: {points:[{lat:..,lng:..}, ...]}
+    // - Axis-aligned box: {minLat:<south>, maxLat:<north>, minLng:<west>, maxLng:<east>}
+    var LOCATION_BOX_ZONES={};
+
+    var EMPLOYEE_LOCATION_OVERRIDES={
+      '059':[2]
+    };
+    function buildLocationKeywords_(name){
+      var raw=String(name||'');
+      var clean=raw.replace(/\s+/g,' ').trim();
+      var compact=normalizeLocationText_(clean);
+      var keywords=[];
+      if(compact)keywords.push(compact);
+
+      var noPrefix=clean.replace(/ប្រៃសណីយ៍កម្ពុជា/g,' ').replace(/សាខា/g,' ').replace(/[()]/g,' ');
+      var tokens=noPrefix.split(/\s+/);
+      for(var i=0;i<tokens.length;i++){
+        var t=normalizeLocationText_(tokens[i]);
+        if(t&&t.length>=3)keywords.push(t);
+      }
+
+      return keywords.filter(function(value,index,array){return value&&array.indexOf(value)===index;});
+    }
+    var LOCATION_BRANCH_RULES=ALLOWED_LOCATIONS.map(function(loc,index){
+      return {index:index,keywords:buildLocationKeywords_(loc&&loc.name)};
+    });
+    var HIDDEN_EMPLOYEE_IDS={'206':true};
+    var employees=[],loggedInEmployee=null,selectedAction='',closedTimeInterval=null;
+    var userLocation=null,geoReady=false,geoError=false;
+    var detectedLocationName=null,detectedLocationIndex=-1;
+    var faceModelsLoaded=false,faceStream=null,faceScanInterval=null,pendingEmployee=null;
+    var loginMethod='pin';
+    var locationModalDismissed=false;
+    var locationModalSuppressUntil=0;
+    var LOCATION_MODAL_SHOWN_KEY='attendanceLocationModalShown';
+
+    var KH_TEXT={
+      'Open in Browser':'បើកក្នុង Browser',
+      'Close':'បិទ',
+      'Location Required':'ត្រូវការទីតាំង',
+      'I turned it on':'ខ្ញុំបានបើករួច',
+      'Face Verification':'ផ្ទៀងផ្ទាត់មុខ',
+      'Loading...':'កំពុងដំណើរការ...',
+      'Retry':'ព្យាយាមម្តងទៀត',
+      'Cancel':'បោះបង់',
+      'Portal Closed':'ប្រព័ន្ធបិទ',
+      'Employee Login':'ចូលប្រើបុគ្គលិក',
+      'Detecting location...':'កំពុងកំណត់ទីតាំង...',
+      'Employee ID':'លេខសម្គាល់បុគ្គលិក',
+      'Select employee...':'ជ្រើសបុគ្គលិក...',
+      'Login Method':'វិធីសាស្ត្រចូលប្រើ',
+      'PIN Code':'កូដ PIN',
+      'Face ID':'មុខសញ្ញា',
+      '6-Digit PIN':'PIN ៦ ខ្ទង់',
+      'Sign In':'ចូលប្រើ',
+      'Attendance':'វត្តមាន',
+      'Name':'ឈ្មោះ',
+      'ID':'លេខសម្គាល់',
+      'Branch':'សាខា',
+      'Province':'ខេត្ត',
+      'District':'ស្រុក/ខណ្ឌ',
+      'Status':'ស្ថានភាព',
+      'No Record':'មិនទាន់មានកំណត់ត្រា',
+      'Attendance complete for today':'បានបញ្ចប់វត្តមានសម្រាប់ថ្ងៃនេះ',
+      'Check In':'ចូលធ្វើការ',
+      'Check Out':'ចេញពីការ',
+      'Submit':'បញ្ជូន',
+      'Check In Successful':'ចូលធ្វើការជោគជ័យ',
+      'Attendance recorded':'បានកត់ត្រាវត្តមានរួចរាល់',
+      'Still detecting location...':'កំពុងកំណត់ទីតាំង...',
+      'Enable GPS and refresh.':'សូមបើក GPS ហើយ Refresh ម្តងទៀត។',
+      'Select an employee.':'សូមជ្រើសបុគ្គលិក។',
+      'Employee not found.':'រកមិនឃើញបុគ្គលិក។',
+      'No location assigned.':'មិនទាន់កំណត់ទីតាំងសម្រាប់បុគ្គលិកនេះ។',
+      'Session expired. Please login again.':'សម័យប្រើប្រាស់ផុតកំណត់។ សូមចូលម្តងទៀត។',
+      'Please login again.':'សូមចូលម្តងទៀត។',
+      'Please select Check In or Check Out.':'សូមជ្រើស ចូលធ្វើការ ឬ ចេញពីការ។',
+      'Cannot check in again today.':'មិនអាចចូលធ្វើការម្តងទៀតក្នុងថ្ងៃនេះបានទេ។',
+      'Check in first before check out.':'សូមចូលធ្វើការជាមុនសិន មុនចេញពីការ។',
+      'Already checked out today.':'អ្នកបានចេញពីការហើយក្នុងថ្ងៃនេះ។',
+      'Checked In':'បានចូលធ្វើការ',
+      'Checked Out':'បានចេញពីការ',
+      'Error':'កំហុស',
+      'Failed: ':'បរាជ័យ៖ '
+    };
+
+    function trText_(value){
+      var out=String(value==null?'':value);
+      var keys=Object.keys(KH_TEXT).sort(function(a,b){return b.length-a.length;});
+      for(var i=0;i<keys.length;i++)out=out.split(keys[i]).join(KH_TEXT[keys[i]]);
+      return out;
+    }
+
+    function localizeStaticText_(){
+      try{
+        var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,null,false);
+        var node;
+        while((node=walker.nextNode())){
+          var p=node.parentNode;
+          if(!p||!p.tagName)continue;
+          if(p.tagName==='SCRIPT'||p.tagName==='STYLE')continue;
+          var original=node.nodeValue;
+          var translated=trText_(original);
+          if(translated!==original)node.nodeValue=translated;
+        }
+      }catch(e){}
+    }
+
+    document.addEventListener('DOMContentLoaded',localizeStaticText_);
+
+    function hasShownLocationModalToday_(){
+      try{return localStorage.getItem(LOCATION_MODAL_SHOWN_KEY)===getTodayISO();}catch(e){return false;}
+    }
+    function markLocationModalShownToday_(){
+      try{localStorage.setItem(LOCATION_MODAL_SHOWN_KEY,getTodayISO());}catch(e){}
+    }
+
+    function getOrCreateDeviceId(){
+      try{
+        var id=localStorage.getItem(DEVICE_ID_KEY);
+        if(id)return id;
+        if(window.crypto&&crypto.randomUUID)id=crypto.randomUUID();
+        else id='dev-'+Date.now()+'-'+Math.random().toString(16).slice(2);
+        localStorage.setItem(DEVICE_ID_KEY,id);
+        return id;
+      }catch(e){
+        return 'temp-'+Date.now();
+      }
+    }
+    function loadSessionToken(){
+      try{return sessionStorage.getItem(SESSION_TOKEN_KEY)||null;}catch(e){return null;}
+    }
+    function saveSessionToken(t){
+      sessionToken=t;
+      try{if(t)sessionStorage.setItem(SESSION_TOKEN_KEY,t);else sessionStorage.removeItem(SESSION_TOKEN_KEY);}catch(e){}
+    }
+    function clearSession(){saveSessionToken(null);}
+
+    function getDateStr(){return new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});}
+    function getTodayISO(){var d=new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');}
+    function isHoliday(){return HOLIDAYS.indexOf(getTodayISO())!==-1;}
+    function isBlockedDay(){return BLOCKED_DAYS.indexOf(new Date().getDay())!==-1;}
+    function isPortalOpen(){if(isBlockedDay()||isHoliday())return false;var h=new Date().getHours();return h>=OPEN_HOUR&&h<CLOSE_HOUR;}
+    function normalizeLocationText_(value){return String(value||'').toLowerCase().replace(/\s+/g,'');}
+    function getEmployeeById_(empId){var target=String(empId||'').padStart(3,'0');for(var i=0;i<employees.length;i++){if(String(employees[i].id||'').padStart(3,'0')===target)return employees[i];}return null;}
+    function isHiddenEmployee_(emp){var id=String((emp&&emp.id)||'').padStart(3,'0');return !!HIDDEN_EMPLOYEE_IDS[id];}
+    function getAllowedLocationIndexesForEmployee_(emp){if(!emp)return[];var empId=String(emp.id||'').padStart(3,'0');if(EMPLOYEE_LOCATION_OVERRIDES[empId]&&EMPLOYEE_LOCATION_OVERRIDES[empId].length)return EMPLOYEE_LOCATION_OVERRIDES[empId].slice();var branchText=normalizeLocationText_([emp.provinceBranch,emp.district].join(' '));if(!branchText)return[];var indexes=[];for(var i=0;i<LOCATION_BRANCH_RULES.length;i++){var rule=LOCATION_BRANCH_RULES[i];for(var j=0;j<rule.keywords.length;j++){var keyword=normalizeLocationText_(rule.keywords[j]);if(keyword&&branchText.indexOf(keyword)!==-1){indexes.push(rule.index);break;}}}return indexes.filter(function(value,index,array){return array.indexOf(value)===index;});}
+    function getDistanceMeters(lat1,lng1,lat2,lng2){var R=6371000,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+    function getLocationBox_(loc,index){if(loc&&loc.box)return loc.box;return LOCATION_BOX_ZONES&&LOCATION_BOX_ZONES.hasOwnProperty(index)?LOCATION_BOX_ZONES[index]:null;}
+    function isInsidePolygon_(lat,lng,points){if(!Array.isArray(points)||points.length<3)return false;var inside=false;for(var i=0,j=points.length-1;i<points.length;j=i++){var xi=Number(points[i].lng),yi=Number(points[i].lat),xj=Number(points[j].lng),yj=Number(points[j].lat);if(!isFinite(xi)||!isFinite(yi)||!isFinite(xj)||!isFinite(yj))continue;var intersect=((yi>lat)!==(yj>lat))&&(lng<((xj-xi)*(lat-yi)/(yj-yi+0.0)+xi));if(intersect)inside=!inside;}return inside;}
+    function isInsideBox_(lat,lng,box){if(!box)return false;if(Array.isArray(box.points)&&box.points.length>=3)return isInsidePolygon_(lat,lng,box.points);var minLat=Math.min(Number(box.minLat),Number(box.maxLat)),maxLat=Math.max(Number(box.minLat),Number(box.maxLat)),minLng=Math.min(Number(box.minLng),Number(box.maxLng)),maxLng=Math.max(Number(box.minLng),Number(box.maxLng));if(!isFinite(minLat)||!isFinite(maxLat)||!isFinite(minLng)||!isFinite(maxLng))return false;return lat>=minLat&&lat<=maxLat&&lng>=minLng&&lng<=maxLng;}
+    function checkGeofence(lat,lng,idx){
+      var locs=[];
+      if(Array.isArray(idx)&&idx.length){
+        for(var ii=0;ii<idx.length;ii++){var x=idx[ii],lx=ALLOWED_LOCATIONS[x];if(lx)locs.push({index:x,loc:lx});}
+      }else{
+        for(var ai=0;ai<ALLOWED_LOCATIONS.length;ai++){if(ALLOWED_LOCATIONS[ai])locs.push({index:ai,loc:ALLOWED_LOCATIONS[ai]});}
+      }
+      if(!locs.length){for(var fb=0;fb<ALLOWED_LOCATIONS.length;fb++){if(ALLOWED_LOCATIONS[fb])locs.push({index:fb,loc:ALLOWED_LOCATIONS[fb]});}}
+
+      for(var i=0;i<locs.length;i++){
+        var item=locs[i],l=item.loc,dist=getDistanceMeters(lat,lng,l.lat,l.lng),box=getLocationBox_(l,item.index);
+        if(box){
+          if(isInsideBox_(lat,lng,box))return{inside:true,location:l.name,distance:Math.round(dist),method:'box'};
+          continue;
+        }
+        if(dist<=l.radius)return{inside:true,location:l.name,distance:Math.round(dist),method:'radius'};
+      }
+
+      var cl=null,cd=Infinity;
+      for(var j=0;j<locs.length;j++){
+        var dd=getDistanceMeters(lat,lng,locs[j].loc.lat,locs[j].loc.lng);
+        if(dd<cd){cd=dd;cl=locs[j].loc.name;}
+      }
+      return{inside:false,closest:cl,distance:Math.round(cd)};
+    }
+    function isIOS_(){return /iPad|iPhone|iPod/i.test(navigator.userAgent||'');}
+    function isAndroid_(){return /Android/i.test(navigator.userAgent||'');}
+
+    function getBrowserContext_(){
+      var ua=String(navigator.userAgent||'');
+      var isTelegram=/Telegram/i.test(ua);
+      var isFB=/FBAN|FBAV|FB_IAB|FB4A/i.test(ua);
+      var isIG=/Instagram/i.test(ua);
+      var isLine=/Line\//i.test(ua);
+      var isWebView=/(; wv\)|\bwv\b|WebView)/i.test(ua) || (isAndroid_() && !/Chrome\//i.test(ua) && /Version\//i.test(ua));
+      var inApp=isTelegram||isFB||isIG||isLine||isWebView;
+      var app=isTelegram?'Telegram':(isFB?'Facebook':(isIG?'Instagram':(isLine?'LINE':(isWebView?'In-app browser':'Browser'))));
+      return {inApp:inApp,app:app,ua:ua};
+    }
+
+    function showBrowserModal(ctx){
+      var m=document.getElementById('browserModal');
+      var steps=document.getElementById('browserModalSteps');
+      var btn=document.getElementById('openInBrowserBtn');
+      var s='';
+      if(isAndroid_()){
+        s='You are opening from '+ctx.app+'.\n\nRecommendation:\n- Tap menu (⋮) → Open in browser / Open in Chrome\n\nThen allow Location when asked.';
+        btn.style.display='inline-block';
+      }else if(isIOS_()){
+        s='You are opening from '+ctx.app+'.\n\nRecommendation:\n- Tap Share (square ↑) → Open in Safari\n\nThen allow Location when asked.';
+        btn.style.display='none';
+      }else{
+        s='You are opening from '+ctx.app+'.\n\nRecommendation:\n- Open this link in a full browser (Chrome/Safari/Edge).';
+        btn.style.display='none';
+      }
+      steps.textContent=s;
+      m.classList.add('visible');
+    }
+
+    function closeBrowserModal(){document.getElementById('browserModal').classList.remove('visible');}
+
+    function openInBrowser(){
+      try{
+        if(isAndroid_()){
+          var url=location.href;
+          var noProto=url.replace(/^https?:\/\//i,'');
+          var intent='intent://'+noProto+'#Intent;scheme=https;package=com.android.chrome;end';
+          location.href=intent;
+          return;
+        }
+      }catch(e){}
+      alert('Please use the app menu to open in Chrome/Safari.');
+    }
+    function showLocationModal(reason){if(Date.now()<locationModalSuppressUntil)return;if(hasShownLocationModalToday_())return;markLocationModalShownToday_();var m=document.getElementById('locationModal');var msg=document.getElementById('locationModalMsg');var steps=document.getElementById('locationModalSteps');m.style.display='flex';var title='Turn on Location and allow permission.';if(reason==='denied')title='Location permission is blocked.';if(reason==='unavailable')title='Location is unavailable.';if(reason==='timeout')title='Location request timed out.';msg.textContent=title;var s='';if(isIOS_()){
+      s='iPhone steps:\n1) Settings → Privacy & Security → Location Services → ON\n2) Settings → Safari (or Chrome) → Location → Allow\n3) Return to this page and tap "I turned it on"';
+    }else if(isAndroid_()){
+      s='Android steps:\n1) Settings → Location → ON\n2) Chrome → Settings → Site settings → Location → Allow\n3) Return to this page and tap "I turned it on"';
+    }else{
+      s='Laptop/PC steps (Chrome/Edge):\n1) Click the lock icon near the address bar\n2) Site settings / Permissions → Location → Allow\n3) Refresh the page, then click "I turned it on"\n\nAlso make sure Windows Location is ON: Settings → Privacy & security → Location';
+    }
+    steps.textContent=s; m.classList.add('visible');}
+    function closeLocationModal(){locationModalDismissed=true;var m=document.getElementById('locationModal');m.classList.remove('visible');m.style.display='none';}
+    function retryLocation(){locationModalSuppressUntil=Date.now()+5000;closeLocationModal();locationModalDismissed=true;try{showLoading();}catch(e){}requestLocation();setTimeout(function(){try{hideLoading();}catch(e){}},1200);}
+    function filterEmployeesByLocation(){
+      if(detectedLocationIndex===-1)return;
+      var sel=document.getElementById('loginEmployeeSelect');
+      sel.disabled=false;
+      while(sel.options.length>1)sel.remove(1);
+      var vc=0;
+      var onlyId=null;
+      for(var k=0;k<employees.length;k++){
+        var allowedIndexes=getAllowedLocationIndexesForEmployee_(employees[k]);
+        if(allowedIndexes.indexOf(detectedLocationIndex)!==-1){
+          var o=document.createElement('option');
+          o.value=employees[k].id;
+          o.textContent=employees[k].id+' - '+employees[k].name;
+          sel.appendChild(o);
+          vc++;
+          onlyId=employees[k].id;
+        }
+      }
+      if(vc===1&&onlyId)sel.value=onlyId;
+      if(vc===0){
+        document.getElementById('noEmployeesMsg').style.display='block';
+        document.getElementById('noEmployeesMsg').textContent='No employees assigned to this location.';
+        document.getElementById('loginFormSection').style.display='none';
+      }else{
+        document.getElementById('noEmployeesMsg').style.display='none';
+        document.getElementById('loginFormSection').style.display='block';
+      }
+      var lk=getDeviceLock();
+      var lockedEmp=getEmployeeById_(lk?lk.empId:'');
+      var lockedIndexes=getAllowedLocationIndexesForEmployee_(lockedEmp);
+      if(lk&&lockedIndexes.indexOf(detectedLocationIndex)!==-1){
+        sel.value=lk.empId;
+        sel.disabled=true;
+      }
+      checkLoginReady();
+    }
+    function requestLocation(){var el=document.getElementById('geoStatus');geoReady=false;geoError=false;detectedLocationName=null;detectedLocationIndex=-1;el.className='geo-badge loading';el.textContent='Detecting location...';if(!navigator.geolocation){el.className='geo-badge denied';el.textContent='Geolocation not supported';geoReady=true;geoError=true;document.getElementById('noEmployeesMsg').style.display='block';document.getElementById('noEmployeesMsg').textContent='GPS not supported on this device.';showLocationModal('unavailable');return;}
+
+      try{
+        if(navigator.permissions&&navigator.permissions.query){
+          navigator.permissions.query({name:'geolocation'}).then(function(p){
+            if(p&&p.state==='denied'){
+              geoReady=true;geoError=true;
+              el.className='geo-badge denied';
+              el.textContent='Location access denied';
+              document.getElementById('noEmployeesMsg').style.display='block';
+              document.getElementById('noEmployeesMsg').textContent='Allow location permission for this site.';
+              document.getElementById('loginFormSection').style.display='none';
+              if(!locationModalDismissed)showLocationModal('denied');
+            }
+          }).catch(function(e){});
+        }
+      }catch(e){}
+
+      navigator.geolocation.getCurrentPosition(function(pos){userLocation={lat:pos.coords.latitude,lng:pos.coords.longitude};geoReady=true;geoError=false;var r=checkGeofence(userLocation.lat,userLocation.lng,null);if(r.inside){el.className='geo-badge ok';el.textContent=r.location;detectedLocationName=r.location;for(var i=0;i<ALLOWED_LOCATIONS.length;i++){if(ALLOWED_LOCATIONS[i].name===detectedLocationName){detectedLocationIndex=i;break;}}filterEmployeesByLocation();}else{el.className='geo-badge fail';el.textContent=r.distance+'m from '+r.closest;document.getElementById('noEmployeesMsg').style.display='block';document.getElementById('noEmployeesMsg').textContent='Move within your branch area to log in.';document.getElementById('loginFormSection').style.display='none';}},function(err){geoReady=true;geoError=true;el.className='geo-badge denied';var reason='timeout';if(err&&err.code===1){el.textContent='Location access denied';reason='denied';}else if(err&&err.code===2){el.textContent='Location unavailable';reason='unavailable';}else{el.textContent='Location timed out';reason='timeout';}document.getElementById('noEmployeesMsg').style.display='block';document.getElementById('noEmployeesMsg').textContent='Enable GPS and allow location to log in.';document.getElementById('loginFormSection').style.display='none';if(!locationModalDismissed)showLocationModal(reason);},{enableHighAccuracy:true,timeout:15000,maximumAge:0});}
+    function selectLoginMethod(method){loginMethod=method;document.getElementById('btnMethodPin').classList.toggle('active',method==='pin');document.getElementById('btnMethodFace').classList.toggle('active',method==='face');document.getElementById('pinSection').classList.toggle('visible',method==='pin');document.getElementById('faceSection').classList.toggle('visible',method==='face');clearError();checkLoginReady();}
+    async function loadFaceModels(){if(faceModelsLoaded)return true;try{document.getElementById('modelsLoading').style.display='block';await faceapi.nets.tinyFaceDetector.loadFromUri(FACE_MODELS_URL);await faceapi.nets.faceLandmark68Net.loadFromUri(FACE_MODELS_URL);await faceapi.nets.faceRecognitionNet.loadFromUri(FACE_MODELS_URL);faceModelsLoaded=true;document.getElementById('modelsLoading').style.display='none';return true;}catch(err){document.getElementById('modelsLoading').textContent='Failed to load models.';return false;}}
+    async function getReferenceDescriptor(empId){var img=await new Promise(function(res,rej){var i=new Image();i.crossOrigin='anonymous';i.onload=function(){res(i);};i.onerror=function(){rej(new Error('Photo not found: faces/'+empId+'.jpg'));};i.src=FACE_PHOTOS_PATH+empId+'.jpg';});var det=await faceapi.detectSingleFace(img,new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceDescriptor();if(!det)throw new Error('No face in reference photo for '+empId);return det.descriptor;}
+    function getHeadYaw(landmarks){var nose=landmarks.positions[30];var leftEye=landmarks.positions[36];var rightEye=landmarks.positions[45];var eyeCenter=(leftEye.x+rightEye.x)/2;var eyeWidth=Math.abs(rightEye.x-leftEye.x);if(eyeWidth===0)return 0;return((nose.x-eyeCenter)/eyeWidth)*100;}
+    function showDirection(arrow,label){document.getElementById('directionArrow').innerHTML=arrow;document.getElementById('directionLabel').textContent=label;document.getElementById('directionOverlay').classList.add('visible');}
+    function hideDirection(){document.getElementById('directionOverlay').classList.remove('visible');}
+    function updateSteps(c){for(var i=1;i<=4;i++){var d=document.getElementById('step'+i);d.classList.remove('active','done');if(i<c)d.classList.add('done');else if(i===c)d.classList.add('active');}}
+    function stopCamera(){if(faceScanInterval){clearInterval(faceScanInterval);faceScanInterval=null;}if(faceStream){faceStream.getTracks().forEach(function(t){t.stop();});faceStream=null;}var v=document.getElementById('faceVideo');if(v)v.srcObject=null;hideDirection();}
+    async function openFaceScan(empId,empName){var st=document.getElementById('faceScanStatus'),rb=document.getElementById('faceRetryBtn');rb.style.display='none';hideDirection();updateSteps(1);document.getElementById('faceScanName').textContent='Verifying: '+empName;st.className='face-status loading';st.textContent='Loading...';document.getElementById('faceScanModal').classList.add('visible');var ok=await loadFaceModels();if(!ok){st.className='face-status fail';st.textContent='Could not load models';rb.style.display='inline-block';return;}var refDesc;try{refDesc=await getReferenceDescriptor(empId);}catch(err){st.className='face-status fail';st.textContent=err.message;rb.style.display='inline-block';return;}try{faceStream=await navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:640},height:{ideal:640}}});var video=document.getElementById('faceVideo');video.srcObject=faceStream;await new Promise(function(resolve){video.onloadedmetadata=function(){video.play().then(resolve).catch(resolve);};setTimeout(resolve,3000);});}catch(err){st.className='face-status fail';st.textContent='Camera access denied';rb.style.display='inline-block';return;}st.className='face-status scanning';st.textContent='Look at the camera...';var step=1;updateSteps(1);setTimeout(function(){var attempts=0,maxAttempts=45;faceScanInterval=setInterval(async function(){attempts++;if(attempts>maxAttempts){clearInterval(faceScanInterval);faceScanInterval=null;st.className='face-status fail';st.textContent='Timed out';rb.style.display='inline-block';hideDirection();stopCamera();return;}var video=document.getElementById('faceVideo');if(!video||video.readyState<2||video.videoWidth===0)return;try{var det=await faceapi.detectSingleFace(video,new faceapi.TinyFaceDetectorOptions({inputSize:416,scoreThreshold:0.5})).withFaceLandmarks().withFaceDescriptor();if(!det){st.textContent='No face detected ('+attempts+'/'+maxAttempts+')';hideDirection();return;}if(step===1){var dist=faceapi.euclideanDistance(det.descriptor,refDesc);if(dist<FACE_MATCH_THRESHOLD){step=2;updateSteps(2);st.className='face-status turn';st.textContent='Face matched! Turn LEFT';showDirection('&#x2B05;&#xFE0F;','Turn LEFT');}else{st.textContent='Scanning... ('+attempts+'/'+maxAttempts+')';hideDirection();}}else if(step===2){var yaw=getHeadYaw(det.landmarks);if(yaw>HEAD_TURN_THRESHOLD){step=3;updateSteps(3);st.textContent='Now turn RIGHT';showDirection('&#x27A1;&#xFE0F;','Turn RIGHT');}}else if(step===3){var yaw=getHeadYaw(det.landmarks);if(yaw<-HEAD_TURN_THRESHOLD){step=4;updateSteps(4);st.textContent='Look at camera';showDirection('&#x2B55;','Look at CAMERA');}}else if(step===4){var yaw=getHeadYaw(det.landmarks);if(Math.abs(yaw)<8){clearInterval(faceScanInterval);faceScanInterval=null;updateSteps(5);hideDirection();st.className='face-status success';st.textContent='Verified! Welcome, '+empName;setTimeout(function(){stopCamera();document.getElementById('faceScanModal').classList.remove('visible');onFaceVerified();},1500);}}}catch(err){st.textContent='Scanning... ('+attempts+'/'+maxAttempts+')';}},800);},1000);}
+    function retryFaceScan(){stopCamera();if(pendingEmployee)openFaceScan(pendingEmployee.id,pendingEmployee.name);}
+    function cancelFaceScan(){stopCamera();document.getElementById('faceScanModal').classList.remove('visible');pendingEmployee=null;}
+    function onFaceVerified(){completeLogin(pendingEmployee.id);}
+    function getClosedReason(){if(isHoliday())return 'Public holiday';if(isBlockedDay())return 'Closed on '+['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'][new Date().getDay()];return '';}
+    function showClosedPanel(){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});document.getElementById('panelClosed').classList.add('active');document.getElementById('closedDate').textContent=getDateStr();var r=getClosedReason();if(r)document.querySelector('.closed-info').innerHTML='<strong>'+r+'</strong><br><br>Operating hours<br><strong>7:00 AM - 10:00 PM</strong><br><strong>Monday - Saturday</strong>';updateClosedTime();if(closedTimeInterval)clearInterval(closedTimeInterval);closedTimeInterval=setInterval(function(){updateClosedTime();if(isPortalOpen()){clearInterval(closedTimeInterval);location.reload();}},1000);}
+    function updateClosedTime(){document.getElementById('closedCurrentTime').textContent=new Date().toLocaleTimeString('en-US',{hour:'2-digit',minute:'2-digit',second:'2-digit'});}
+    function startPortalCloseWatcher(){setInterval(function(){if(!isPortalOpen())showClosedPanel();},60000);}
+    function getDeviceLock(){try{var l=JSON.parse(localStorage.getItem('attendanceLock'));if(l&&l.date===getTodayISO())return l;localStorage.removeItem('attendanceLock');return null;}catch(e){return null;}}
+    function setDeviceLock(id,name){localStorage.setItem('attendanceLock',JSON.stringify({date:getTodayISO(),empId:id,empName:name}));}
+    function applyDeviceLock(){var lk=getDeviceLock(),bn=document.getElementById('deviceLockBanner'),sl=document.getElementById('loginEmployeeSelect');if(lk){bn.textContent='Device locked to '+lk.empName+' ('+lk.empId+')';bn.style.display='block';sl.value=lk.empId;sl.disabled=true;}else{bn.style.display='none';sl.disabled=false;}}
+    var devTapCount=0,devTapTimer=null;
+    document.addEventListener('click',function(e){if(e.target.closest('.lock-icon')){devTapCount++;if(devTapTimer)clearTimeout(devTapTimer);devTapTimer=setTimeout(function(){devTapCount=0;},3000);if(devTapCount>=7){devTapCount=0;document.getElementById('devPanel').classList.add('visible');populateDevSelect();}}});
+    function closeDevPanel(){document.getElementById('devPanel').classList.remove('visible');}
+    function devClearDeviceLock(){localStorage.removeItem('attendanceLock');alert('Device lock cleared');closeDevPanel();location.reload();}
+    function devClearAllStorage(){localStorage.clear();alert('Storage cleared');closeDevPanel();location.reload();}
+    function populateDevSelect(){var sel=document.getElementById('devEmpSelect');var sel2=document.getElementById('devEmpSelectUnlock');if(employees.length>0){if(sel&&sel.options.length<=1){employees.forEach(function(emp){var o=document.createElement('option');o.value=emp.id;o.textContent=emp.id+' - '+emp.name;sel.appendChild(o);});}if(sel2&&sel2.options.length<=1){employees.forEach(function(emp){var o2=document.createElement('option');o2.value=emp.id;o2.textContent=emp.id+' - '+emp.name;sel2.appendChild(o2);});}}}
+
+    function devAdminForceUnlock(){
+      try{
+        var empId=(document.getElementById('devEmpSelectUnlock')||{}).value||'';
+        if(!empId){alert('Select an employee ID');return;}
+        var adminKey=prompt('Enter Admin Key');
+        if(!adminKey)return;
+        var url=API_URL+'?action=adminForceUnlock&employeeId='+encodeURIComponent(empId)+'&adminKey='+encodeURIComponent(adminKey);
+        showLoading();
+        fetch(url,{method:'GET'}).then(function(r){return r.json();}).then(function(j){
+          hideLoading();
+          if(j&&j.success){alert('Unlocked for '+empId);closeDevPanel();}
+          else alert((j&&j.error)?j.error:'Unlock failed');
+        }).catch(function(e){hideLoading();alert(e&&e.message?e.message:String(e));});
+      }catch(e){try{hideLoading();}catch(_){}alert(e&&e.message?e.message:String(e));}
+    }
+    async function devClearLoginSession(){var empId=document.getElementById('devEmpSelect').value;if(!empId){alert('Select an employee ID first');return;}try{var tok=loadSessionToken();if(!tok){alert('Session expired. Please login again.');return;}var did=getOrCreateDeviceId();var res=await fetch(API_URL+'?action=clearLogin&employeeId='+encodeURIComponent(empId)+'&token='+encodeURIComponent(tok)+'&deviceId='+encodeURIComponent(did));var result=await res.json();if(result.success){alert('Login session cleared for '+empId+' ('+result.deleted+' records removed)');localStorage.removeItem('attendanceLock');clearSession();closeDevPanel();location.reload();}else{alert('Error: '+result.error);}}catch(err){alert('Failed: '+err.message);}}
+    function devShowInfo(){var info=document.getElementById('devInfo');var lock=localStorage.getItem('attendanceLock');var d='Today: '+getTodayISO()+'\nLock: '+(lock||'None')+'\nGPS: '+(userLocation?userLocation.lat.toFixed(6)+', '+userLocation.lng.toFixed(6):'N/A')+'\nBranch: '+(detectedLocationName||'N/A')+' ['+detectedLocationIndex+']\nEmployees: '+employees.length+'\nFace: '+(faceModelsLoaded?'Ready':'Not loaded')+'\nPortal: '+(isPortalOpen()?'Open':'Closed')+'\nMethod: '+loginMethod;info.textContent=d;info.style.display=info.style.display==='none'?'block':'none';}
+    window.onload=async function(){deviceId=getOrCreateDeviceId();sessionToken=loadSessionToken();if(!isPortalOpen()){showClosedPanel();return;}startPortalCloseWatcher();try{var ctx=getBrowserContext_();if(ctx&&ctx.inApp)showBrowserModal(ctx);}catch(e){}requestLocation();var ds=getDateStr();document.getElementById('loginDate').textContent=ds;document.getElementById('attendanceDate').textContent=ds;showLoading();try{var res=await fetch(API_URL+'?action=getEmployees');var result=await res.json();hideLoading();if(!result.success){showToast(result.error,'error');return;}employees=(result.data||[]).filter(function(emp){return !isHiddenEmployee_(emp);});var sel=document.getElementById('loginEmployeeSelect');employees.forEach(function(emp){var o=document.createElement('option');o.value=emp.id;o.textContent=emp.id+' - '+emp.name;sel.appendChild(o);});applyDeviceLock();filterEmployeesByLocation();}catch(err){hideLoading();showToast('Failed: '+err.message,'error');}document.getElementById('loginEmployeeSelect').addEventListener('change',checkLoginReady);};
+    function pinNext(n){if(document.getElementById('pin'+n).value&&n<6)document.getElementById('pin'+(n+1)).focus();checkLoginReady();}
+    function pinBack(e,n){if(e.key==='Backspace'&&!document.getElementById('pin'+n).value&&n>1)document.getElementById('pin'+(n-1)).focus();}
+    function getPin(){var p='';for(var i=1;i<=6;i++)p+=document.getElementById('pin'+i).value;return p;}
+    function clearPinOnly(){for(var i=1;i<=6;i++)document.getElementById('pin'+i).value='';}
+    function checkLoginReady(){var es=!!document.getElementById('loginEmployeeSelect').value;if(loginMethod==='pin'){document.getElementById('loginBtnPin').disabled=!(es&&getPin().length===6);}else{document.getElementById('loginBtnFace').disabled=!es;}}
+    function showPanel(id){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});document.getElementById(id).classList.add('active');}
+    function showError(msg){document.getElementById('loginError').textContent=trText_(msg);}
+    function clearError(){document.getElementById('loginError').textContent='';}
+    async function runPreChecks(empId){if(!isPortalOpen()){showClosedPanel();return false;}if(!geoReady){showError('Still detecting location...');return false;}if(geoError){showError('Enable GPS and refresh.');return false;}if(!empId){showError('Select an employee.');return false;}clearError();var lk=getDeviceLock();if(lk&&lk.empId!==empId){showError('Device locked to '+lk.empName);return false;}var emp=getEmployeeById_(empId);if(!emp){showError('Employee not found.');return false;}var ai=getAllowedLocationIndexesForEmployee_(emp);if(!ai.length){showError('No location assigned.');return false;}var gr=checkGeofence(userLocation.lat,userLocation.lng,ai);if(!gr.inside){showError(gr.distance+'m from '+gr.closest+'. Go to your assigned branch.');return false;}return true;}
+    async function completeLogin(empId){loggedInEmployee=employees.find(function(e){return e.id===empId;});if(!loggedInEmployee){showError('Employee not found.');return;}pendingEmployee=null;setDeviceLock(loggedInEmployee.id,loggedInEmployee.name);try{document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Loading...</span>';}catch(e){}showPanel('panelAttendance');try{var tok=loadSessionToken();if(!tok){throw new Error('Session expired. Please login again.');}var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'logAttendance',auth:{token:tok,deviceId:did},data:{employeeAction:'Login',employeeName:loggedInEmployee.name,employeeId:loggedInEmployee.id,mainBranch:loggedInEmployee.mainBranch,provinceBranch:loggedInEmployee.provinceBranch,district:loggedInEmployee.district}})});var result=await res.json();if(!result.success){if(result&&String(result.error||'').toLowerCase().indexOf('unauthorized')!==-1){clearSession();showToast('Session expired. Please login again.','error');showPanel('panelLogin');return;}throw new Error(result.error||'Login attendance failed');}await populateAttendancePanel();}catch(err){showError(err.message);showToast(err.message,'error');}}
+    async function handlePinLogin(){var empId=document.getElementById('loginEmployeeSelect').value,pin=getPin();if(!empId||pin.length!==6)return;var ok=await runPreChecks(empId);if(!ok){clearPinOnly();document.getElementById('pin1').focus();return;}showLoading();try{var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'login',data:{employeeId:empId,pin:pin,deviceId:did}})});var result=await res.json();hideLoading();if(!result.success){clearPinOnly();showError(result.error||'Login failed');document.getElementById('pin1').focus();return;}saveSessionToken(result.token);clearPinOnly();await completeLogin(empId);}catch(err){hideLoading();clearPinOnly();showError('Failed: '+err.message);document.getElementById('pin1').focus();}}
+    async function handleFaceLogin(){var empId=document.getElementById('loginEmployeeSelect').value;if(!empId)return;var ok=await runPreChecks(empId);if(!ok)return;var emp=employees.find(function(e){return e.id===empId;});if(!emp){showError('Employee not found.');return;}pendingEmployee=emp;openFaceScan(empId,emp.name);}
+    async function populateAttendancePanel(){document.getElementById('infoName').textContent=loggedInEmployee.name;document.getElementById('infoId').textContent=loggedInEmployee.id;document.getElementById('infoMainBranch').textContent=loggedInEmployee.mainBranch||'-';document.getElementById('infoProvince').textContent=loggedInEmployee.provinceBranch||'-';document.getElementById('infoDistrict').textContent=loggedInEmployee.district||'-';selectedAction='';var ci=document.getElementById('btnCheckIn'),co=document.getElementById('btnCheckOut'),sb=document.getElementById('submitBtn');ci.classList.remove('sel-in','disabled');co.classList.remove('sel-out','disabled');ci.style.display='block';co.style.display='block';sb.disabled=true;document.getElementById('completedBanner').style.display='none';document.getElementById('actionSection').style.display='block';document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Loading...</span>';try{var res=await fetch(API_URL+'?action=getTodayActions&employeeId='+encodeURIComponent(loggedInEmployee.id));var result=await res.json();var el=document.getElementById('infoStatus');if(!result.success){el.innerHTML='<span class="badge badge-none">Error</span>';return;}var ac=result.actions||[];var hI=ac.some(function(a){return a.action==='Check In';});var hO=ac.some(function(a){return a.action==='Check Out';});if(hI&&hO){el.innerHTML='<span class="badge badge-out">Checked Out</span>';document.getElementById('completedBanner').style.display='block';document.getElementById('actionSection').style.display='none';}else if(hI){el.innerHTML='<span class="badge badge-in">Checked In</span>';ci.style.display='none';co.style.display='block';ci.classList.add('disabled');co.classList.remove('disabled');}else{el.innerHTML='<span class="badge badge-none">No Record</span>';ci.style.display='block';co.style.display='none';ci.classList.remove('disabled');co.classList.add('disabled');}}catch(err){document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Error</span>';}}
+    function selectAction(a){var ci=document.getElementById('btnCheckIn'),co=document.getElementById('btnCheckOut');if(a==='Check In'&&ci.classList.contains('disabled'))return;if(a==='Check Out'&&co.classList.contains('disabled'))return;selectedAction=a;ci.classList.remove('sel-in');co.classList.remove('sel-out');if(a==='Check In'){ci.style.display='block';co.style.display='none';ci.classList.add('sel-in');ci.classList.remove('disabled');co.classList.add('disabled');}else{co.style.display='block';ci.style.display='none';co.classList.add('sel-out');co.classList.remove('disabled');ci.classList.add('disabled');}document.getElementById('submitBtn').disabled=false;}
+    async function submitAttendance(){if(!isPortalOpen()){showClosedPanel();return;}if(userLocation&&loggedInEmployee){var ai=getAllowedLocationIndexesForEmployee_(loggedInEmployee);if(ai.length){var gc=checkGeofence(userLocation.lat,userLocation.lng,ai);if(!gc.inside){var g=document.getElementById('geoStatusAttendance');g.style.display='block';g.className='geo-badge fail';g.textContent='Moved out of branch zone';return;}}}if(!loggedInEmployee){showToast('Please login again.','error');showPanel('panelLogin');return;}if(!selectedAction){showToast('Please select Check In or Check Out.','error');return;}var tok=loadSessionToken();if(!tok){showToast('Session expired. Please login again.','error');return;}showLoading();document.getElementById('submitBtn').disabled=true;try{var stateRes=await fetch(API_URL+'?action=getTodayActions&employeeId='+encodeURIComponent(loggedInEmployee.id));var state=await stateRes.json();if(!state.success)throw new Error(state.error||'Failed to validate attendance state');var acts=state.actions||[];var hasIn=acts.some(function(a){return a.action==='Check In';});var hasOut=acts.some(function(a){return a.action==='Check Out';});if(selectedAction==='Check In'&&(hasIn||hasOut)){hideLoading();showToast('Cannot check in again today.','error');document.getElementById('submitBtn').disabled=false;await populateAttendancePanel();return;}if(selectedAction==='Check Out'&&!hasIn){hideLoading();showToast('Check in first before check out.','error');document.getElementById('submitBtn').disabled=false;await populateAttendancePanel();return;}if(selectedAction==='Check Out'&&hasOut){hideLoading();showToast('Already checked out today.','error');document.getElementById('submitBtn').disabled=false;await populateAttendancePanel();return;}var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'logAttendance',auth:{token:tok,deviceId:did},data:{employeeAction:selectedAction,employeeName:loggedInEmployee.name,employeeId:loggedInEmployee.id,mainBranch:loggedInEmployee.mainBranch,provinceBranch:loggedInEmployee.provinceBranch,district:loggedInEmployee.district}})});var result=await res.json();hideLoading();if(result.success)showSuccessPanel();else{if(result&&String(result.error||'').toLowerCase().indexOf('unauthorized')!==-1){clearSession();showToast('Session expired. Please login again.','error');showPanel('panelLogin');}else{showToast(result.error,'error');}document.getElementById('submitBtn').disabled=false;await populateAttendancePanel();}}catch(err){hideLoading();showToast('Failed: '+err.message,'error');document.getElementById('submitBtn').disabled=false;}}
+    function showSuccessPanel(){var c=selectedAction==='Check In';document.getElementById('successTitle').textContent=selectedAction+' Successful';var b=document.getElementById('successActionBadge');b.textContent=selectedAction;b.className='success-badge '+(c?'ci':'co');document.getElementById('successDate').textContent=getDateStr();document.getElementById('successName').textContent=loggedInEmployee.name;document.getElementById('successId').textContent=loggedInEmployee.id;document.getElementById('successBranch').textContent=loggedInEmployee.mainBranch||'-';document.getElementById('successProvince').textContent=loggedInEmployee.provinceBranch||'-';document.getElementById('successDistrict').textContent=loggedInEmployee.district||'-';document.getElementById('successTimestamp').textContent=new Date().toLocaleString('en-US',{weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit'});showPanel('panelSuccess');}
+    function showLoading(){document.getElementById('loadingOverlay').classList.add('visible');}
+    function hideLoading(){document.getElementById('loadingOverlay').classList.remove('visible');}
+    function showToast(m,t){var e=document.getElementById('toast');e.textContent=trText_(m);e.className='toast '+t+' show';setTimeout(function(){e.classList.remove('show');},4000);}
+  </script>
+</body>
+</html>
