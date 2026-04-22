@@ -172,6 +172,7 @@
     ALLOWED_LOCATIONS[30]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តព្រះសីហនុ',lat:12.053984,lng:105.062563,radius:30};
     ALLOWED_LOCATIONS[31]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តឧត្តរមានជ័យ',lat:14.191376,lng:103.509709,radius:30};
     ALLOWED_LOCATIONS[32]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកំពត',lat:10.606002,lng:104.179899,radius:30};
+    ALLOWED_LOCATIONS[33]={name:'ប្រៃសណីយ៍កម្ពុជា សាខាខេត្តកែប',lat:10.480334,lng:104.315098,radius:30};
 
     // Optional strict zone boxes by location index.
     // If a zone exists for a location, check-in is allowed only inside that zone.
@@ -262,10 +263,21 @@
       'Failed: ':'បរាជ័យ៖ '
     };
 
+    var KH_TEXT_KEYS_SORTED=[];
+    var KH_TEXT_REGEX=null;
+
+    function escapeRegex_(value){return String(value||'').replace(/[.*+?^${}()|[\]\\]/g,'\\$&');}
+    function compileKhTextRegex_(){
+      KH_TEXT_KEYS_SORTED=Object.keys(KH_TEXT).sort(function(a,b){return b.length-a.length;});
+      if(!KH_TEXT_KEYS_SORTED.length){KH_TEXT_REGEX=null;return;}
+      KH_TEXT_REGEX=new RegExp(KH_TEXT_KEYS_SORTED.map(escapeRegex_).join('|'),'g');
+    }
+    compileKhTextRegex_();
+
     function trText_(value){
       var out=String(value==null?'':value);
-      var keys=Object.keys(KH_TEXT).sort(function(a,b){return b.length-a.length;});
-      for(var i=0;i<keys.length;i++)out=out.split(keys[i]).join(KH_TEXT[keys[i]]);
+      if(!KH_TEXT_REGEX)return out;
+      out=out.replace(KH_TEXT_REGEX,function(match){return KH_TEXT.hasOwnProperty(match)?KH_TEXT[match]:match;});
       return out;
     }
 
@@ -356,15 +368,18 @@
     function getEmployeeById_(empId){var target=String(empId||'').padStart(3,'0');for(var i=0;i<employees.length;i++){if(String(employees[i].id||'').padStart(3,'0')===target)return employees[i];}return null;}
     function isHiddenEmployee_(emp){var id=String((emp&&emp.id)||'').padStart(3,'0');return !!HIDDEN_EMPLOYEE_IDS[id];}
     function getAllowedLocationIndexesForEmployee_(emp){if(!emp)return[];var empId=String(emp.id||'').padStart(3,'0');if(EMPLOYEE_LOCATION_OVERRIDES[empId]&&EMPLOYEE_LOCATION_OVERRIDES[empId].length)return EMPLOYEE_LOCATION_OVERRIDES[empId].slice();var branchText=normalizeLocationText_([emp.provinceBranch,emp.district].join(' '));if(!branchText)return[];var indexes=[];for(var i=0;i<LOCATION_BRANCH_RULES.length;i++){var rule=LOCATION_BRANCH_RULES[i];for(var j=0;j<rule.keywords.length;j++){var keyword=normalizeLocationText_(rule.keywords[j]);if(keyword&&branchText.indexOf(keyword)!==-1){indexes.push(rule.index);break;}}}return indexes.filter(function(value,index,array){return array.indexOf(value)===index;});}
-    function getDistanceMeters(lat1,lng1,lat2,lng2){var R=6371000,dLat=(lat2-lat1)*Math.PI/180,dLng=(lng2-lng1)*Math.PI/180;var a=Math.sin(dLat/2)*Math.sin(dLat/2)+Math.cos(lat1*Math.PI/180)*Math.cos(lat2*Math.PI/180)*Math.sin(dLng/2)*Math.sin(dLng/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+    function buildUserDistanceCache_(lat,lng){var latRad=lat*Math.PI/180;return{lat:lat,lng:lng,latRad:latRad,cosLat:Math.cos(latRad)};}
+    function getDistanceMeters(lat1,lng1,lat2,lng2,userCache){var R=6371000,lat1Rad=(userCache&&isFinite(userCache.latRad))?userCache.latRad:lat1*Math.PI/180,cosLat1=(userCache&&isFinite(userCache.cosLat))?userCache.cosLat:Math.cos(lat1Rad),lat2Rad=lat2*Math.PI/180,dLat=lat2Rad-lat1Rad,dLng=(lng2-lng1)*Math.PI/180;var a=Math.sin(dLat/2)*Math.sin(dLat/2)+cosLat1*Math.cos(lat2Rad)*Math.sin(dLng/2)*Math.sin(dLng/2);return R*2*Math.atan2(Math.sqrt(a),Math.sqrt(1-a));}
+    function getDistanceToSegmentMeters_(lat,lng,lat1,lng1,lat2,lng2){var metersPerDegLat=111320,latRad=lat*Math.PI/180,metersPerDegLng=Math.max(0.000001,metersPerDegLat*Math.cos(latRad));var px=(lng-lng1)*metersPerDegLng,py=(lat-lat1)*metersPerDegLat,vx=(lng2-lng1)*metersPerDegLng,vy=(lat2-lat1)*metersPerDegLat,den=vx*vx+vy*vy;if(den===0)return Math.sqrt(px*px+py*py);var t=(px*vx+py*vy)/den;if(t<0)t=0;else if(t>1)t=1;var dx=px-vx*t,dy=py-vy*t;return Math.sqrt(dx*dx+dy*dy);}
     function getLocationBox_(loc,index){if(loc&&loc.box)return loc.box;return LOCATION_BOX_ZONES&&LOCATION_BOX_ZONES.hasOwnProperty(index)?LOCATION_BOX_ZONES[index]:null;}
-    function isInsidePolygon_(lat,lng,points){if(!Array.isArray(points)||points.length<3)return false;var inside=false;for(var i=0,j=points.length-1;i<points.length;j=i++){var xi=Number(points[i].lng),yi=Number(points[i].lat),xj=Number(points[j].lng),yj=Number(points[j].lat);if(!isFinite(xi)||!isFinite(yi)||!isFinite(xj)||!isFinite(yj))continue;var intersect=((yi>lat)!==(yj>lat))&&(lng<((xj-xi)*(lat-yi)/(yj-yi+0.0)+xi));if(intersect)inside=!inside;}return inside;}
+    function isInsidePolygon_(lat,lng,points){if(!Array.isArray(points)||points.length<3)return false;var edgeToleranceM=2;var inside=false;for(var i=0,j=points.length-1;i<points.length;j=i++){var xi=Number(points[i].lng),yi=Number(points[i].lat),xj=Number(points[j].lng),yj=Number(points[j].lat);if(!isFinite(xi)||!isFinite(yi)||!isFinite(xj)||!isFinite(yj))continue;if(getDistanceToSegmentMeters_(lat,lng,yi,xi,yj,xj)<=edgeToleranceM)return true;var intersect=((yi>lat)!==(yj>lat))&&(lng<((xj-xi)*(lat-yi)/(yj-yi+0.0)+xi));if(intersect)inside=!inside;}return inside;}
     function isInsideBox_(lat,lng,box){if(!box)return false;if(Array.isArray(box.points)&&box.points.length>=3)return isInsidePolygon_(lat,lng,box.points);var minLat=Math.min(Number(box.minLat),Number(box.maxLat)),maxLat=Math.max(Number(box.minLat),Number(box.maxLat)),minLng=Math.min(Number(box.minLng),Number(box.maxLng)),maxLng=Math.max(Number(box.minLng),Number(box.maxLng));if(!isFinite(minLat)||!isFinite(maxLat)||!isFinite(minLng)||!isFinite(maxLng))return false;return lat>=minLat&&lat<=maxLat&&lng>=minLng&&lng<=maxLng;}
     function checkGeofence(lat,lng,idx){
       if(isGeofenceBypass_()){
         var fallback=ALLOWED_LOCATIONS[0]&&ALLOWED_LOCATIONS[0].name?ALLOWED_LOCATIONS[0].name:'Developer Bypass';
         return{inside:true,location:fallback,distance:0,method:'dev-bypass'};
       }
+      var userDistanceCache=buildUserDistanceCache_(lat,lng);
       var locs=[];
       if(Array.isArray(idx)&&idx.length){
         for(var ii=0;ii<idx.length;ii++){var x=idx[ii],lx=ALLOWED_LOCATIONS[x];if(lx)locs.push({index:x,loc:lx});}
@@ -373,21 +388,35 @@
       }
       if(!locs.length){for(var fb=0;fb<ALLOWED_LOCATIONS.length;fb++){if(ALLOWED_LOCATIONS[fb])locs.push({index:fb,loc:ALLOWED_LOCATIONS[fb]});}}
 
+      var cl=null,cd=Infinity;
       for(var i=0;i<locs.length;i++){
-        var item=locs[i],l=item.loc,dist=getDistanceMeters(lat,lng,l.lat,l.lng),box=getLocationBox_(l,item.index);
+        var item=locs[i],l=item.loc,dist=getDistanceMeters(lat,lng,l.lat,l.lng,userDistanceCache),box=getLocationBox_(l,item.index);
+        if(dist<cd){cd=dist;cl=l.name;}
         if(box){
           if(isInsideBox_(lat,lng,box))return{inside:true,location:l.name,distance:Math.round(dist),method:'box'};
           continue;
         }
         if(dist<=l.radius)return{inside:true,location:l.name,distance:Math.round(dist),method:'radius'};
       }
-
-      var cl=null,cd=Infinity;
-      for(var j=0;j<locs.length;j++){
-        var dd=getDistanceMeters(lat,lng,locs[j].loc.lat,locs[j].loc.lng);
-        if(dd<cd){cd=dd;cl=locs[j].loc.name;}
-      }
       return{inside:false,closest:cl,distance:Math.round(cd)};
+    }
+
+    function sleep_(ms){return new Promise(function(resolve){setTimeout(resolve,ms);});}
+    async function fetchJsonWithRetry_(url,options){var delays=[1000,2000,4000],lastErr=null;for(var attempt=0;attempt<=delays.length;attempt++){try{var res=await fetch(url,options||{});if(!res.ok)throw new Error('HTTP '+res.status);return await res.json();}catch(err){lastErr=err;if(attempt===delays.length)break;await sleep_(delays[attempt]);}}throw(lastErr||new Error('Request failed'));}
+    function friendlyApiError_(err){
+      var raw=String(err==null?'':err).trim();
+      if(!raw)return 'Request failed. Please try again.';
+      var lower=raw.toLowerCase();
+      if(lower==='failed to fetch'||lower.indexOf('networkerror')!==-1||lower.indexOf('load failed')!==-1)return 'Network error. Please check internet and try again.';
+      if(lower.indexOf('http 401')!==-1||lower.indexOf('unauthorized')!==-1)return 'Session expired. Please login again.';
+      if(lower.indexOf('http 403')!==-1)return 'Access denied. Please contact admin.';
+      if(lower.indexOf('http 404')!==-1)return 'Service not found. Please contact admin.';
+      if(lower.indexOf('http 429')!==-1)return 'Too many requests. Please wait and try again.';
+      if(lower.indexOf('http 5')!==-1)return 'Server is busy. Please try again shortly.';
+      if(lower.indexOf('missing parameter')!==-1)return 'Missing required data. Please retry.';
+      if(lower.indexOf('unknown action')!==-1)return 'Unsupported request. Please refresh and retry.';
+      if(lower.indexOf('incorrect pin')!==-1)return 'Incorrect PIN. Please try again.';
+      return raw;
     }
     function isIOS_(){return /iPad|iPhone|iPod/i.test(navigator.userAgent||'');}
     function isAndroid_(){return /Android/i.test(navigator.userAgent||'');}
@@ -587,18 +616,39 @@
     }
     async function devClearLoginSession(){var empId=document.getElementById('devEmpSelect').value;if(!empId){alert('Select an employee ID first');return;}try{var tok=loadSessionToken();if(!tok){alert('Session expired. Please login again.');return;}var did=getOrCreateDeviceId();var res=await fetch(API_URL+'?action=clearLogin&employeeId='+encodeURIComponent(empId)+'&token='+encodeURIComponent(tok)+'&deviceId='+encodeURIComponent(did));var result=await res.json();if(result.success){alert('Login session cleared for '+empId+' ('+result.deleted+' records removed)');localStorage.removeItem('attendanceLock');clearSession();closeDevPanel();location.reload();}else{alert('Error: '+result.error);}}catch(err){alert('Failed: '+err.message);}}
     function devShowInfo(){var info=document.getElementById('devInfo');var lock=localStorage.getItem('attendanceLock');var d='Today: '+getTodayISO()+'\nLock: '+(lock||'None')+'\nGPS: '+(userLocation?userLocation.lat.toFixed(6)+', '+userLocation.lng.toFixed(6):'N/A')+'\nBranch: '+(detectedLocationName||'N/A')+' ['+detectedLocationIndex+']\nEmployees: '+employees.length+'\nFace: '+(faceModelsLoaded?'Ready':'Not loaded')+'\nPortal: '+(isPortalOpen()?'Open':'Closed')+'\nDev Override: '+(isDeveloperOverride_()?'ON':'OFF')+'\nGeo Bypass: '+(isGeofenceBypass_()?'ON':'OFF')+'\nMethod: '+loginMethod;info.textContent=d;info.style.display=info.style.display==='none'?'block':'none';}
-    window.onload=async function(){deviceId=getOrCreateDeviceId();sessionToken=loadSessionToken();refreshHolidaySet_();await hydrateHolidayDates_();if(!isPortalOpen()){showClosedPanel();return;}startPortalCloseWatcher();try{var ctx=getBrowserContext_();if(ctx&&ctx.inApp)showBrowserModal(ctx);}catch(e){}requestLocation();var ds=getDateStr();document.getElementById('loginDate').textContent=ds;document.getElementById('attendanceDate').textContent=ds;showLoading();try{var res=await fetch(API_URL+'?action=getEmployees');var result=await res.json();hideLoading();if(!result.success){showToast(result.error,'error');return;}employees=(result.data||[]).filter(function(emp){return !isHiddenEmployee_(emp);});var sel=document.getElementById('loginEmployeeSelect');employees.forEach(function(emp){var o=document.createElement('option');o.value=emp.id;o.textContent=emp.id+' - '+emp.name;sel.appendChild(o);});applyDeviceLock();filterEmployeesByLocation();}catch(err){hideLoading();showToast('Failed: '+err.message,'error');}document.getElementById('loginEmployeeSelect').addEventListener('change',checkLoginReady);};
+    function initSessionAndHolidays_(){deviceId=getOrCreateDeviceId();sessionToken=loadSessionToken();refreshHolidaySet_();}
+    function initPortalGuards_(){if(!isPortalOpen()){showClosedPanel();return false;}startPortalCloseWatcher();return true;}
+    function initBrowserContextModal_(){try{var ctx=getBrowserContext_();if(ctx&&ctx.inApp)showBrowserModal(ctx);}catch(e){}}
+    function initLocationAndDates_(){requestLocation();var ds=getDateStr();document.getElementById('loginDate').textContent=ds;document.getElementById('attendanceDate').textContent=ds;}
+    function populateLoginEmployeeSelect_(list){var sel=document.getElementById('loginEmployeeSelect');if(!sel)return;sel.innerHTML='<option value="">Select Employee</option>';for(var i=0;i<list.length;i++){var emp=list[i];var o=document.createElement('option');o.value=emp.id;o.textContent=emp.id+' - '+emp.name;sel.appendChild(o);}}
+    async function loadEmployeesForLogin_(){showLoading();try{var result=await fetchJsonWithRetry_(API_URL+'?action=getEmployees');hideLoading();if(!result.success){showToast(friendlyApiError_(result.error),'error');return false;}employees=(result.data||[]).filter(function(emp){return !isHiddenEmployee_(emp);});populateLoginEmployeeSelect_(employees);applyDeviceLock();filterEmployeesByLocation();return true;}catch(err){hideLoading();showToast(friendlyApiError_(err&&err.message?err.message:err),'error');return false;}}
+    function attachLoginEvents_(){var sel=document.getElementById('loginEmployeeSelect');if(sel)sel.addEventListener('change',checkLoginReady);}
+
+    var AppInit=(function(){
+      async function bootstrap(){
+        initSessionAndHolidays_();
+        await hydrateHolidayDates_();
+        if(!initPortalGuards_())return;
+        initBrowserContextModal_();
+        initLocationAndDates_();
+        await loadEmployeesForLogin_();
+        attachLoginEvents_();
+      }
+      return {bootstrap:bootstrap};
+    })();
+
+    window.onload=async function(){await AppInit.bootstrap();};
     function pinNext(n){if(document.getElementById('pin'+n).value&&n<6)document.getElementById('pin'+(n+1)).focus();checkLoginReady();}
     function pinBack(e,n){if(e.key==='Backspace'&&!document.getElementById('pin'+n).value&&n>1)document.getElementById('pin'+(n-1)).focus();}
     function getPin(){var p='';for(var i=1;i<=6;i++)p+=document.getElementById('pin'+i).value;return p;}
     function clearPinOnly(){for(var i=1;i<=6;i++)document.getElementById('pin'+i).value='';}
     function checkLoginReady(){var es=!!document.getElementById('loginEmployeeSelect').value;if(loginMethod==='pin'){document.getElementById('loginBtnPin').disabled=!(es&&getPin().length===6);}else{document.getElementById('loginBtnFace').disabled=!es;}}
     function showPanel(id){document.querySelectorAll('.panel').forEach(function(p){p.classList.remove('active');});document.getElementById(id).classList.add('active');}
-    function showError(msg){document.getElementById('loginError').textContent=trText_(msg);}
+    function showError(msg){document.getElementById('loginError').textContent=trText_(friendlyApiError_(msg));}
     function clearError(){document.getElementById('loginError').textContent='';}
     async function runPreChecks(empId){if(!isPortalOpen()){showClosedPanel();return false;}if(!isGeofenceBypass_()&&!geoReady){showError('Still detecting location...');return false;}if(!isGeofenceBypass_()&&geoError){showError('Enable GPS and refresh.');return false;}if(!empId){showError('Select an employee.');return false;}clearError();var lk=getDeviceLock();if(lk&&lk.empId!==empId){showError('Device locked to '+lk.empName);return false;}var emp=getEmployeeById_(empId);if(!emp){showError('Employee not found.');return false;}var ai=getAllowedLocationIndexesForEmployee_(emp);if(!ai.length){showError('No location assigned.');return false;}if(!isGeofenceBypass_()){var gr=checkGeofence(userLocation.lat,userLocation.lng,ai);if(!gr.inside){showError(gr.distance+'m from '+gr.closest+'. Go to your assigned branch.');return false;}}return true;}
-    async function completeLogin(empId){loggedInEmployee=employees.find(function(e){return e.id===empId;});if(!loggedInEmployee){showError('Employee not found.');return;}pendingEmployee=null;setDeviceLock(loggedInEmployee.id,loggedInEmployee.name);try{document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Loading...</span>';document.getElementById('btnCheckIn').style.display='none';document.getElementById('btnCheckOut').style.display='none';document.getElementById('submitBtn').disabled=true;document.getElementById('completedBanner').style.display='none';document.getElementById('actionSection').style.display='block';}catch(e){}showPanel('panelAttendance');try{var tok=loadSessionToken();if(!tok){throw new Error('Session expired. Please login again.');}var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'logAttendance',auth:{token:tok,deviceId:did},data:{employeeAction:'Login',employeeName:loggedInEmployee.name,employeeId:loggedInEmployee.id,mainBranch:loggedInEmployee.mainBranch,provinceBranch:loggedInEmployee.provinceBranch,district:loggedInEmployee.district}})});var result=await res.json();if(!result.success){if(result&&String(result.error||'').toLowerCase().indexOf('unauthorized')!==-1){clearSession();showToast('Session expired. Please login again.','error');showPanel('panelLogin');return;}throw new Error(result.error||'Login attendance failed');}await populateAttendancePanel();}catch(err){showError(err.message);showToast(err.message,'error');}}
-    async function handlePinLogin(){var empId=document.getElementById('loginEmployeeSelect').value,pin=getPin();if(!empId||pin.length!==6)return;var ok=await runPreChecks(empId);if(!ok){clearPinOnly();document.getElementById('pin1').focus();return;}showLoading();try{var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'login',data:{employeeId:empId,pin:pin,deviceId:did}})});var result=await res.json();hideLoading();if(!result.success){clearPinOnly();showError(result.error||'Login failed');document.getElementById('pin1').focus();return;}saveSessionToken(result.token);clearPinOnly();await completeLogin(empId);}catch(err){hideLoading();clearPinOnly();showError('Failed: '+err.message);document.getElementById('pin1').focus();}}
+    async function completeLogin(empId){loggedInEmployee=employees.find(function(e){return e.id===empId;});if(!loggedInEmployee){showError('Employee not found.');return;}pendingEmployee=null;setDeviceLock(loggedInEmployee.id,loggedInEmployee.name);try{document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Loading...</span>';document.getElementById('btnCheckIn').style.display='none';document.getElementById('btnCheckOut').style.display='none';document.getElementById('submitBtn').disabled=true;document.getElementById('completedBanner').style.display='none';document.getElementById('actionSection').style.display='block';}catch(e){}showPanel('panelAttendance');try{var tok=loadSessionToken();if(!tok){throw new Error('Session expired. Please login again.');}var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'logAttendance',auth:{token:tok,deviceId:did},data:{employeeAction:'Login',employeeName:loggedInEmployee.name,employeeId:loggedInEmployee.id,mainBranch:loggedInEmployee.mainBranch,provinceBranch:loggedInEmployee.provinceBranch,district:loggedInEmployee.district}})});var result=await res.json();if(!result.success){if(result&&String(result.error||'').toLowerCase().indexOf('unauthorized')!==-1){clearSession();showToast('Session expired. Please login again.','error');showPanel('panelLogin');return;}throw new Error(friendlyApiError_(result.error||'Login attendance failed'));}await populateAttendancePanel();}catch(err){var msg=friendlyApiError_(err&&err.message?err.message:err);showError(msg);showToast(msg,'error');}}
+    async function handlePinLogin(){var empId=document.getElementById('loginEmployeeSelect').value,pin=getPin();if(!empId||pin.length!==6)return;var ok=await runPreChecks(empId);if(!ok){clearPinOnly();document.getElementById('pin1').focus();return;}showLoading();try{var did=getOrCreateDeviceId();var res=await fetch(API_URL,{method:'POST',headers:{'Content-Type':'text/plain'},body:JSON.stringify({action:'login',data:{employeeId:empId,pin:pin,deviceId:did}})});var result=await res.json();hideLoading();if(!result.success){clearPinOnly();showError(friendlyApiError_(result.error||'Login failed'));document.getElementById('pin1').focus();return;}saveSessionToken(result.token);clearPinOnly();await completeLogin(empId);}catch(err){hideLoading();clearPinOnly();showError(friendlyApiError_(err&&err.message?err.message:err));document.getElementById('pin1').focus();}}
     async function handleFaceLogin(){var empId=document.getElementById('loginEmployeeSelect').value;if(!empId)return;var ok=await runPreChecks(empId);if(!ok)return;var emp=employees.find(function(e){return e.id===empId;});if(!emp){showError('Employee not found.');return;}pendingEmployee=emp;openFaceScan(empId,emp.name);}
     async function populateAttendancePanel(){document.getElementById('infoName').textContent=loggedInEmployee.name;document.getElementById('infoId').textContent=loggedInEmployee.id;document.getElementById('infoMainBranch').textContent=loggedInEmployee.mainBranch||'-';document.getElementById('infoProvince').textContent=loggedInEmployee.provinceBranch||'-';document.getElementById('infoDistrict').textContent=loggedInEmployee.district||'-';selectedAction='';var ci=document.getElementById('btnCheckIn'),co=document.getElementById('btnCheckOut'),sb=document.getElementById('submitBtn');ci.classList.remove('sel-in','disabled');co.classList.remove('sel-out','disabled');ci.style.display='none';co.style.display='none';sb.disabled=true;document.getElementById('completedBanner').style.display='none';document.getElementById('actionSection').style.display='block';document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Loading...</span>';try{var res=await fetch(API_URL+'?action=getTodayActions&employeeId='+encodeURIComponent(loggedInEmployee.id));var result=await res.json();var el=document.getElementById('infoStatus');if(!result.success){el.innerHTML='<span class="badge badge-none">Error</span>';return;}var ac=result.actions||[];var hI=ac.some(function(a){return a.action==='Check In';});var hO=ac.some(function(a){return a.action==='Check Out';});if(hI&&hO){el.innerHTML='<span class="badge badge-out">Already checked in and checked out today</span>';showToast('Already checked in and checked out for today. Come back tomorrow.','error');document.getElementById('completedBanner').style.display='block';document.getElementById('actionSection').style.display='none';}else if(hI){el.innerHTML='<span class="badge badge-in">Checked In</span>';ci.style.display='none';co.style.display='block';ci.classList.add('disabled');co.classList.remove('disabled');}else{el.innerHTML='<span class="badge badge-none">No Record</span>';ci.style.display='block';co.style.display='none';ci.classList.remove('disabled');co.classList.add('disabled');}}catch(err){document.getElementById('infoStatus').innerHTML='<span class="badge badge-none">Error</span>';}}
     async function selectAction(a){var ci=document.getElementById('btnCheckIn'),co=document.getElementById('btnCheckOut');if(a==='Check In'&&ci.classList.contains('disabled'))return;if(a==='Check Out'&&co.classList.contains('disabled'))return;selectedAction=a;ci.classList.remove('sel-in');co.classList.remove('sel-out');if(a==='Check In'){ci.style.display='block';co.style.display='none';ci.classList.add('sel-in');ci.classList.remove('disabled');co.classList.add('disabled');}else{co.style.display='block';ci.style.display='none';co.classList.add('sel-out');co.classList.remove('disabled');ci.classList.add('disabled');}document.getElementById('submitBtn').disabled=false;await submitAttendance();}
@@ -606,7 +656,7 @@
     function showSuccessPanel(){var c=selectedAction==='Check In';document.getElementById('successTitle').textContent=selectedAction+' Successful';var b=document.getElementById('successActionBadge');b.textContent=selectedAction;b.className='success-badge '+(c?'ci':'co');document.getElementById('successDate').textContent=getDateStr();document.getElementById('successName').textContent=loggedInEmployee.name;document.getElementById('successId').textContent=loggedInEmployee.id;document.getElementById('successBranch').textContent=loggedInEmployee.mainBranch||'-';document.getElementById('successProvince').textContent=loggedInEmployee.provinceBranch||'-';document.getElementById('successDistrict').textContent=loggedInEmployee.district||'-';document.getElementById('successTimestamp').textContent=new Date().toLocaleString('km-KH-u-ca-gregory',{weekday:'short',year:'numeric',month:'short',day:'numeric',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false});showPanel('panelSuccess');}
     function showLoading(){document.getElementById('loadingOverlay').classList.add('visible');}
     function hideLoading(){document.getElementById('loadingOverlay').classList.remove('visible');}
-    function showToast(m,t){var e=document.getElementById('toast');e.textContent=trText_(m);e.className='toast '+t+' show';setTimeout(function(){e.classList.remove('show');},4000);}
+    function showToast(m,t){var e=document.getElementById('toast');e.textContent=trText_(friendlyApiError_(m));e.className='toast '+t+' show';setTimeout(function(){e.classList.remove('show');},4000);}
   </script>
 </body>
 </html>
